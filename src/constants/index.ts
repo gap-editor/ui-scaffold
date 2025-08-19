@@ -3,6 +3,9 @@ import { FieldErrors, FieldValues, useFormContext } from 'react-hook-form'
 
 export const FormatDate = 'dd/MM/yyyy'
 export const FormatDateLong = 'MMMM d - yyyy H:mm'
+export const TokenPrice = 0.15
+export const MinPurchaseTokens = 100
+export const StripeEnabled = import.meta.env.STRIPE_PUBLIC_KEY !== ''
 
 const evocdoni = import.meta.env.VOCDONI_ENVIRONMENT
 
@@ -82,6 +85,6 @@ export type RecursivePartial<T> = {
   [P in keyof T]?: T[P] extends (infer U)[]
     ? RecursivePartial<U>[]
     : T[P] extends object | undefined
-    ? RecursivePartial<T[P]>
-    : T[P]
+      ? RecursivePartial<T[P]>
+      : T[P]
 }

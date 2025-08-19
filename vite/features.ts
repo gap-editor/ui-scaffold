@@ -1,4 +1,4 @@
-import merge from 'ts-deepmerge'
+import { merge } from 'ts-deepmerge'
 import ValidLanguages from '../src/i18n/languages.mjs'
 
 // Define constants for valid values
@@ -24,6 +24,7 @@ type Features = {
     secret: boolean
     customization: boolean
   }
+  calculator: boolean
   login: Login[]
   census: Census[]
   unimplemented_census: UnimplementedCensus[]
@@ -44,6 +45,7 @@ type Defaults = Omit<Features, '_census'>
 const features = () => {
   const defaults: Defaults = {
     faucet: true,
+    calculator: true,
     vote: {
       anonymous: true,
       overwrite: true,
@@ -52,9 +54,9 @@ const features = () => {
     },
     login: ['web3', 'web2'],
     census: ['spreadsheet', 'token', 'web3', 'csp', 'gitcoin'],
-    unimplemented_census: [],
+    unimplemented_census: ['phone', 'email', 'crm', 'database', 'digital_certificate'],
     voting_type: ['single', 'approval'],
-    unimplemented_voting_type: [],
+    unimplemented_voting_type: ['multi', 'participatory', 'borda'],
     languages: ValidLanguages,
   }
 
@@ -101,8 +103,7 @@ const features = () => {
   for (const census of features.census) {
     features._census[census] = true
   }
-
-  console.log('features:', features)
+  console.info('features:', features)
 
   return {
     name: 'feature-flags',
